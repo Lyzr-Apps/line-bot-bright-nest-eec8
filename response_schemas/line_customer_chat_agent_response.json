@@ -1,0 +1,20 @@
+{
+  "agent_name": "LINE Customer Chat Agent",
+  "agent_id": "69997a7de6cce9ba73b56cca",
+  "description": "Handles customer conversations via LINE, answers questions about the business using its knowledge base, maintains a helpful and efficient tone, and escalates gracefully when it cannot help",
+  "agent_type": "json",
+  "accessor": "result",
+  "auto_generated": true,
+  "response_schema": {
+    "response": "string",
+    "confidence": "string",
+    "escalate": "boolean",
+    "topic": "string"
+  },
+  "example_response": {
+    "response": "The chatbot response message to the customer",
+    "confidence": "Confidence level in the response based on knowledge base match",
+    "escalate": false,
+    "topic": "The detected topic or category of the customer query"
+  }
+}

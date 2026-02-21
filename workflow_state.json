@@ -1,0 +1,11 @@
+{
+  "agents": {
+    "line_customer_chat_agent": {
+      "agent_id": "69997a7de6cce9ba73b56cca",
+      "name": "LINE Customer Chat Agent",
+      "type": "single",
+      "has_knowledge_base": true,
+      "rag_id": "69997a6ae12ce168202ff424"
+    }
+  }
+}
