@@ -152,16 +152,27 @@ export async function POST(request: NextRequest) {
         );
       }
 
+      // For CSV files, convert to TXT since the RAG API doesn't have a /train/csv/ endpoint
+      let uploadFile = file;
+      let trainFileType = fileType;
+      if (fileType === "csv") {
+        const csvText = await file.text();
+        const txtBlob = new Blob([csvText], { type: "text/plain" });
+        const txtFileName = file.name.replace(/\.csv$/i, ".txt");
+        uploadFile = new File([txtBlob], txtFileName, { type: "text/plain" });
+        trainFileType = "txt";
+      }
+
       // Direct upload and train in one step
       const trainFormData = new FormData();
-      trainFormData.append("file", file, file.name);
+      trainFormData.append("file", uploadFile, uploadFile.name);
       trainFormData.append("data_parser", "llmsherpa");
       trainFormData.append("chunk_size", "1000");
       trainFormData.append("chunk_overlap", "100");
       trainFormData.append("extra_info", "{}");
 
       const trainResponse = await fetch(
-        `${LYZR_RAG_BASE_URL}/train/${fileType}/?rag_id=${encodeURIComponent(
+        `${LYZR_RAG_BASE_URL}/train/${trainFileType}/?rag_id=${encodeURIComponent(
           ragId
         )}`,
         {
