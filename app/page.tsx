@@ -710,6 +710,7 @@ function KnowledgeBaseScreen({ docCount, setDocCount }: { docCount: number; setD
     switch (ft) {
       case 'pdf': return <FiFileText className="w-5 h-5 text-red-400" />
       case 'docx': return <FiFile className="w-5 h-5 text-blue-400" />
+      case 'csv': return <FiFileText className="w-5 h-5 text-emerald-400" />
       case 'txt': return <FiFileText className="w-5 h-5 text-muted-foreground" />
       default: return <FiFile className="w-5 h-5 text-muted-foreground" />
     }
@@ -724,7 +725,7 @@ function KnowledgeBaseScreen({ docCount, setDocCount }: { docCount: number; setD
             <CardTitle className="text-sm font-semibold flex items-center gap-2">
               <HiOutlineUpload className="w-4 h-4" /> Upload Document
             </CardTitle>
-            <CardDescription className="text-xs">PDF, DOCX, or TXT files</CardDescription>
+            <CardDescription className="text-xs">PDF, DOCX, TXT, or CSV files</CardDescription>
           </CardHeader>
           <CardContent>
             <div
@@ -736,8 +737,8 @@ function KnowledgeBaseScreen({ docCount, setDocCount }: { docCount: number; setD
             >
               <HiOutlineUpload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
               <p className="text-sm text-foreground font-medium">Drop file here or click to browse</p>
-              <p className="text-xs text-muted-foreground mt-1">Supports PDF, DOCX, TXT</p>
-              <input ref={fileInputRef} type="file" className="hidden" accept=".pdf,.docx,.txt" onChange={handleFileSelect} />
+              <p className="text-xs text-muted-foreground mt-1">Supports PDF, DOCX, TXT, CSV</p>
+              <input ref={fileInputRef} type="file" className="hidden" accept=".pdf,.docx,.txt,.csv" onChange={handleFileSelect} />
             </div>
             {uploadStatus && (
               <div className={`mt-3 flex items-center gap-2 text-xs px-3 py-2 rounded-lg ${uploadStatus.type === 'success' ? 'bg-emerald-500/10 text-emerald-400' : uploadStatus.type === 'error' ? 'bg-red-500/10 text-red-400' : 'bg-secondary text-muted-foreground'}`}>

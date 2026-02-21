@@ -14,6 +14,7 @@ export const SUPPORTED_FILE_TYPES = [
   'application/pdf',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   'text/plain',
+  'text/csv',
 ] as const
 
 export type SupportedFileType = (typeof SUPPORTED_FILE_TYPES)[number]
@@ -22,13 +23,14 @@ export const FILE_EXTENSION_MAP: Record<string, SupportedFileType> = {
   '.pdf': 'application/pdf',
   '.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
   '.txt': 'text/plain',
+  '.csv': 'text/csv',
 }
 
 // Types
 export interface RAGDocument {
   id?: string
   fileName: string
-  fileType: 'pdf' | 'docx' | 'txt'
+  fileType: 'pdf' | 'docx' | 'txt' | 'csv'
   fileSize?: number
   status?: 'processing' | 'active' | 'failed' | 'deleted'
   uploadedAt?: string
@@ -101,7 +103,7 @@ export async function uploadAndTrainDocument(ragId: string, file: File): Promise
   if (!SUPPORTED_FILE_TYPES.includes(file.type as SupportedFileType)) {
     return {
       success: false,
-      error: `Unsupported file type: ${file.type}. Supported: PDF, DOCX, TXT`,
+      error: `Unsupported file type: ${file.type}. Supported: PDF, DOCX, TXT, CSV`,
     }
   }
 
@@ -181,7 +183,7 @@ export function validateFile(file: File): { valid: boolean; error?: string } {
   if (!SUPPORTED_FILE_TYPES.includes(file.type as SupportedFileType)) {
     return {
       valid: false,
-      error: `Unsupported file type. Supported formats: PDF, DOCX, TXT`,
+      error: `Unsupported file type. Supported formats: PDF, DOCX, TXT, CSV`,
     }
   }
   return { valid: true }

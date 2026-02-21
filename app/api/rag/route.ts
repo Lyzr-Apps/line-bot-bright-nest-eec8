@@ -31,11 +31,12 @@ import { NextRequest, NextResponse } from "next/server";
 const LYZR_RAG_BASE_URL = "https://rag-prod.studio.lyzr.ai/v3";
 const LYZR_API_KEY = process.env.LYZR_API_KEY || "";
 
-const FILE_TYPE_MAP: Record<string, "pdf" | "docx" | "txt"> = {
+const FILE_TYPE_MAP: Record<string, "pdf" | "docx" | "txt" | "csv"> = {
   "application/pdf": "pdf",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
     "docx",
   "text/plain": "txt",
+  "text/csv": "csv",
 };
 
 // POST - List documents (JSON body) or Upload and train (formData)
@@ -96,7 +97,9 @@ export async function POST(request: NextRequest) {
                 ? "docx"
                 : ext === "txt"
                   ? "txt"
-                  : "unknown";
+                  : ext === "csv"
+                    ? "csv"
+                    : "unknown";
 
           return {
             fileName,
@@ -143,7 +146,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
           {
             success: false,
-            error: `Unsupported file type: ${file.type}. Supported: PDF, DOCX, TXT`,
+            error: `Unsupported file type: ${file.type}. Supported: PDF, DOCX, TXT, CSV`,
           },
           { status: 400 }
         );
